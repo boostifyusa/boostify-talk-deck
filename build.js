@@ -123,6 +123,7 @@ const out = `<!DOCTYPE html>
 ${fontLink}
 <link rel="stylesheet" href="vendor/reveal/reveal.css">
 <link rel="stylesheet" href="anim.css">
+<link rel="stylesheet" href="presenter.css">
 <style>
 ${deckCSS}
 ${integrationCSS}
@@ -149,11 +150,50 @@ ${sections}
   <button class="fs" title="Full screen (F)" aria-label="Full screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V5a1 1 0 0 1 1-1h4M20 9V5a1 1 0 0 0-1-1h-4M4 15v4a1 1 0 0 0 1 1h4M20 15v4a1 1 0 0 1-1 1h-4"/></svg></button>
 </div>
 
+<!-- presenter mode (notes + remote control + PIN) -->
+<div id="bz-pin" class="bz-pin"><div class="bz-pin-card">
+  <div class="bz-pin-title">Presenter mode</div>
+  <div class="bz-pin-sub">Enter your PIN to unlock speaker notes and remote control.</div>
+  <input id="bz-pin-input" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" aria-label="PIN">
+  <div id="bz-pin-err" class="bz-pin-err"></div>
+  <button id="bz-pin-go" class="bz-pin-go">Unlock</button>
+  <div class="bz-pin-row"><button id="bz-pin-forgot">Forgot PIN?</button><button id="bz-pin-cancel">Just watch</button></div>
+</div></div>
+
+<div id="bz-notes" class="bz-notes">
+  <div class="bz-notes-head">
+    <span class="bz-badge" id="bz-num">1 / 1</span>
+    <span class="bz-conn">● Live</span>
+    <span class="bz-spacer"></span>
+    <button class="bz-btn bz-view">Slides</button>
+    <button class="bz-btn bz-attach">Detach</button>
+  </div>
+  <div class="bz-notes-body">
+    <div class="bz-now" id="bz-now"></div>
+    <ul class="bz-notelist" id="bz-notelist"></ul>
+    <div class="bz-next" id="bz-next"></div>
+  </div>
+  <div class="bz-notes-nav">
+    <button class="bz-nav prev" id="bz-prev">&lsaquo; Prev</button>
+    <button class="bz-nav next" id="bz-nextb">Next &rsaquo;</button>
+  </div>
+</div>
+
+<div id="bz-bar" class="bz-bar">
+  <button class="bz-btn bz-view">Notes</button>
+  <button class="bz-btn bz-attach">Detach</button>
+  <span class="bz-bar-num" id="bz-barnum">1/1</span>
+</div>
+
+<button id="bz-unlock" class="bz-unlock">Presenter</button>
+
 <script src="vendor/reveal/reveal.js"></script>
 <script>
 ${initJS}
 </script>
 <script src="anim.js"></script>
+<script src="notes.js"></script>
+<script src="presenter.js"></script>
 </body>
 </html>
 `;
