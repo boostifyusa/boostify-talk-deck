@@ -60,20 +60,29 @@ systemctl daemon-reload
 systemctl enable boostify-deck
 systemctl restart boostify-deck
 
-echo "==> nginx vhost ($HOST -> 127.0.0.1:$PORT)"
+echo "==> nginx vhost ($HOST -> 127.0.0.1:$PORT, http + https)"
+# Cloudflare (Full) connects to the origin on 443, so we need an https listener too.
+# Reuse the box's existing boostifyusa.com cert (a CN mismatch is fine under CF "Full").
+SSLBLOCK=""
+if [ -f /etc/letsencrypt/live/boostifyusa.com/fullchain.pem ]; then
+  SSLBLOCK="
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name $HOST;
+    ssl_certificate /etc/letsencrypt/live/boostifyusa.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/boostifyusa.com/privkey.pem;
+    location / { proxy_pass http://127.0.0.1:$PORT; proxy_http_version 1.1; proxy_set_header Host \$host; proxy_set_header X-Real-IP \$remote_addr; proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for; proxy_set_header X-Forwarded-Proto \$scheme; }
+}"
+fi
 cat > "/etc/nginx/sites-available/$HOST" <<NGINX
 server {
     listen 80;
     listen [::]:80;
     server_name $HOST;
-    location / {
-        proxy_pass http://127.0.0.1:$PORT;
-        proxy_http_version 1.1;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-    }
+    location / { proxy_pass http://127.0.0.1:$PORT; proxy_http_version 1.1; proxy_set_header Host \$host; proxy_set_header X-Real-IP \$remote_addr; proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for; proxy_set_header X-Forwarded-Proto \$scheme; }
 }
+$SSLBLOCK
 NGINX
 ln -sf "/etc/nginx/sites-available/$HOST" "/etc/nginx/sites-enabled/$HOST"
 nginx -t
