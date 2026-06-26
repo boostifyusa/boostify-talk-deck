@@ -3,3 +3,4 @@ _test.html
 *.log
 presenter.config.json
 .server.pid
+.state.json

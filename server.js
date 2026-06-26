@@ -14,9 +14,15 @@ let cfg = { pin: '4291', ownerEmail: '', senderEmail: '', senderName: 'Boostify 
 try { Object.assign(cfg, JSON.parse(fs.readFileSync(path.join(ROOT, 'presenter.config.json'), 'utf8'))); }
 catch (e) { console.warn('No presenter.config.json — using defaults (PIN 4291, no email reset).'); }
 
-// shared state
-const state = { slide: 0, rev: 0, by: null, t: Date.now() };
+// shared state (persisted, so a restart mid-talk resumes the current slide)
+const STATE_FILE = path.join(ROOT, '.state.json');
+let state = { slide: 0, rev: 0, by: null, t: Date.now() };
+try { Object.assign(state, JSON.parse(fs.readFileSync(STATE_FILE, 'utf8'))); } catch (e) {}
+function saveState() { fs.writeFile(STATE_FILE, JSON.stringify(state), function () {}); }
 let lastForgot = 0;
+// PIN brute-force throttle: max 12 wrong tries / minute
+let fails = [];
+function blocked() { var n = Date.now(); fails = fails.filter(function (t) { return n - t < 60000; }); return fails.length >= 12; }
 
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json',
   '.svg': 'image/svg+xml', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp',
@@ -51,14 +57,18 @@ const server = http.createServer(async (req, res) => {
   // ---- API ----
   if (p === '/api/state' && req.method === 'GET') return json(res, 200, state);
   if (p === '/api/state' && req.method === 'POST') {
+    if (blocked()) return json(res, 429, { error: 'too many attempts' });
     const b = await readBody(req);
-    if (String(b.pin) !== String(cfg.pin)) return json(res, 403, { error: 'bad pin' });
-    if (typeof b.slide === 'number') { state.slide = b.slide; state.rev++; state.by = b.clientId || null; state.t = Date.now(); }
+    if (String(b.pin) !== String(cfg.pin)) { fails.push(Date.now()); return json(res, 403, { error: 'bad pin' }); }
+    if (typeof b.slide === 'number') { state.slide = b.slide; state.rev++; state.by = b.clientId || null; state.t = Date.now(); saveState(); }
     return json(res, 200, state);
   }
   if (p === '/api/login' && req.method === 'POST') {
+    if (blocked()) return json(res, 429, { ok: false, reason: 'too many attempts, wait a minute' });
     const b = await readBody(req);
-    return json(res, String(b.pin) === String(cfg.pin) ? 200 : 401, { ok: String(b.pin) === String(cfg.pin) });
+    const ok = String(b.pin) === String(cfg.pin);
+    if (!ok) fails.push(Date.now());
+    return json(res, ok ? 200 : 401, { ok: ok });
   }
   if (p === '/api/forgot' && req.method === 'POST') {
     const now = Date.now();
@@ -83,4 +93,4 @@ const server = http.createServer(async (req, res) => {
   });
 });
 
-server.listen(cfg.port, () => console.log(`Boostify deck + presenter sync on http://localhost:${cfg.port}/  (PIN gated)`));
+server.listen(cfg.port, cfg.host || undefined, () => console.log(`Boostify deck + presenter sync on http://${cfg.host || 'localhost'}:${cfg.port}/  (PIN gated)`));
