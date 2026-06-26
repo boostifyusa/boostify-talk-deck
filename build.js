@@ -115,6 +115,7 @@ const out = `<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 ${fontLink}
 <link rel="stylesheet" href="vendor/reveal/reveal.css">
+<link rel="stylesheet" href="anim.css">
 <style>
 ${deckCSS}
 ${integrationCSS}
@@ -142,6 +143,7 @@ ${sections}
 <script>
 ${initJS}
 </script>
+<script src="anim.js"></script>
 </body>
 </html>
 `;

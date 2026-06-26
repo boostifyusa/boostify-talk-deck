@@ -1,0 +1,61 @@
+/* ============================================================
+   Looping, meaning-bearing micro-animations for the deck graphics.
+   Everything is scoped to the ACTIVE (.present) slide, so only what is
+   on screen moves. Transform/opacity + a few cheap color changes only.
+   Honors prefers-reduced-motion (see the block at the bottom).
+   ============================================================ */
+
+/* smooth state changes for the JS-driven posting-week reshuffle */
+.cal .d{transition:border-color .55s ease, background-color .55s ease;}
+.cal .d .dot{transition:background-color .55s ease, transform .55s ease;}
+.cal .d.on .dot{transform:scale(1.18);}
+
+/* A · boost-signal rings — slow breathing (the "signal radiating" motif) */
+@keyframes bzPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.reveal .slides section.present .ring{animation:bzPulse 7s ease-in-out infinite;transform-origin:center;}
+.reveal .slides section.present .ring:nth-of-type(2){animation-duration:9s;animation-delay:-2.5s;}
+
+/* C · checklists tick themselves through, hold, reset, loop ("getting it done") */
+.reveal .slides section.present .check .bx{position:relative;animation:bzBox 7s ease-in-out infinite both;}
+.reveal .slides section.present .check .bx::after{content:"";position:absolute;left:31%;top:6%;width:26%;height:55%;
+  border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) scale(0);opacity:0;
+  animation:bzMark 7s ease-in-out infinite both;}
+@keyframes bzBox{0%,4%{background:transparent}11%,90%{background:var(--orange)}100%{background:transparent}}
+@keyframes bzMark{0%,6%{opacity:0;transform:rotate(45deg) scale(0)}13%,90%{opacity:1;transform:rotate(45deg) scale(1)}100%{opacity:0;transform:rotate(45deg) scale(0)}}
+.reveal .slides section.present .check .row:nth-child(1) .bx,.reveal .slides section.present .check .row:nth-child(1) .bx::after{animation-delay:0s}
+.reveal .slides section.present .check .row:nth-child(2) .bx,.reveal .slides section.present .check .row:nth-child(2) .bx::after{animation-delay:.45s}
+.reveal .slides section.present .check .row:nth-child(3) .bx,.reveal .slides section.present .check .row:nth-child(3) .bx::after{animation-delay:.9s}
+.reveal .slides section.present .check .row:nth-child(4) .bx,.reveal .slides section.present .check .row:nth-child(4) .bx::after{animation-delay:1.35s}
+.reveal .slides section.present .check .row:nth-child(5) .bx,.reveal .slides section.present .check .row:nth-child(5) .bx::after{animation-delay:1.8s}
+
+/* D · scam-email red flags pulse in sequence (eye walks down the flags) */
+.reveal .slides section.present .flagnote{animation:bzFlagRow 3.4s ease-in-out infinite both;}
+.reveal .slides section.present .flagnote .x{display:inline-block;animation:bzFlagX 3.4s ease-in-out infinite both;}
+@keyframes bzFlagRow{0%,100%{opacity:.62}42%,58%{opacity:1}}
+@keyframes bzFlagX{0%,100%{transform:scale(1)}48%,54%{transform:scale(1.35)}}
+.reveal .slides section.present .flagnote ~ .flagnote,.reveal .slides section.present .flagnote ~ .flagnote .x{animation-delay:.4s}
+.reveal .slides section.present .flagnote ~ .flagnote ~ .flagnote,.reveal .slides section.present .flagnote ~ .flagnote ~ .flagnote .x{animation-delay:.8s}
+
+/* F · one job -> a week of posts: a highlight sweeps Mon..Sat, then loops */
+@keyframes bzSweep{0%{border-color:var(--orange);background:var(--cream);}9%{border-color:var(--rule);background:#fff;}100%{border-color:var(--rule);background:#fff;}}
+.reveal .slides section.present .outs .o1{animation:bzSweep 6s linear infinite;}
+.reveal .slides section.present .outs .o1:nth-child(1){animation-delay:0s}
+.reveal .slides section.present .outs .o1:nth-child(2){animation-delay:1s}
+.reveal .slides section.present .outs .o1:nth-child(3){animation-delay:2s}
+.reveal .slides section.present .outs .o1:nth-child(4){animation-delay:3s}
+.reveal .slides section.present .outs .o1:nth-child(5){animation-delay:4s}
+.reveal .slides section.present .outs .o1:nth-child(6){animation-delay:5s}
+@keyframes bzSrcPulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.reveal .slides section.present .flow .src1{animation:bzSrcPulse 6s ease-in-out infinite;}
+
+/* reduced motion: stop everything that loops */
+@media (prefers-reduced-motion: reduce){
+  .reveal .slides section.present .ring,
+  .reveal .slides section.present .check .bx,
+  .reveal .slides section.present .check .bx::after,
+  .reveal .slides section.present .flagnote,
+  .reveal .slides section.present .flagnote .x,
+  .reveal .slides section.present .outs .o1,
+  .reveal .slides section.present .flow .src1{animation:none !important;}
+  .cal .d,.cal .d .dot{transition:none !important;}
+}
