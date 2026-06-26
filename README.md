@@ -51,3 +51,15 @@ bash deploy/deploy.sh    # pulls latest from GitHub and reloads
 sudo apt install certbot python3-certbot-nginx
 sudo certbot --nginx
 ```
+
+## Host it at presentation.boostifyusa.com (subdomain on the droplet)
+
+This serves the deck as its own vhost, alongside anything else on the box.
+
+On the droplet (root/sudo):
+```bash
+curl -fsSL https://raw.githubusercontent.com/boostifyusa/boostify-talk-deck/main/deploy/setup-subdomain.sh | sudo bash
+```
+Then in Cloudflare: add `A  presentation -> <droplet-ip>` (Proxied). Cloudflare
+serves HTTPS at the edge; the origin vhost listens on port 80. Re-run the command
+anytime to pull the latest deck.
