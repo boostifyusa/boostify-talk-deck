@@ -37,7 +37,7 @@ html,body{margin:0;padding:0;height:100%;width:100%;background:#15110d;}
 .reveal .slides section.rs>.slide{box-shadow:none!important;}
 .reveal .controls{color:var(--orange);}
 .reveal .progress{color:var(--orange);height:5px;}
-.reveal .slide-number{background:rgba(26,21,17,.6);font-family:var(--body);}
+.reveal .slide-number{background:rgba(17,17,17,.55);font-family:var(--body);left:10px;right:auto;border-radius:6px;}
 
 /* ---------- per-slide content reveal (auto-plays on slide enter; no clicking) ---------- */
 @keyframes bzRise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
@@ -55,24 +55,25 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
 
 /* ---------- start / fullscreen overlay ---------- */
 #bz-start{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;cursor:pointer;
-  background:radial-gradient(130% 130% at 72% 18%, #C44E13 0%, #9a3f0e 62%, #7c330b 100%);color:#fff;font-family:var(--body);transition:opacity .45s ease;}
+  background:radial-gradient(130% 130% at 72% 18%, #E8590C 0%, #C44908 58%, #9a3f0e 100%);color:#fff;font-family:var(--body);transition:opacity .45s ease;}
 #bz-start.hide{opacity:0;pointer-events:none;}
 #bz-start .si{display:flex;flex-direction:column;align-items:flex-start;gap:18px;max-width:760px;padding:0 6vw;}
 #bz-start .smk{height:34px;width:auto;color:#fff;}
 #bz-start h1{font-family:var(--disp);font-weight:800;font-size:clamp(40px,7vw,86px);line-height:.95;letter-spacing:-.03em;}
-#bz-start h1 .g{color:var(--gold);}
+#bz-start h1 .g{color:#fff;}
 #bz-start p{font-size:clamp(15px,2.1vw,20px);font-weight:500;opacity:.92;max-width:46ch;line-height:1.5;}
 #bz-start .cta{margin-top:8px;display:inline-flex;align-items:center;gap:12px;background:#fff;color:#7c330b;font-family:var(--disp);font-weight:800;
   font-size:clamp(15px,2vw,19px);padding:14px 26px;border-radius:10px;}
-#bz-start .cta .pl{display:inline-block;width:0;height:0;border-left:13px solid #C44E13;border-top:9px solid transparent;border-bottom:9px solid transparent;}
+#bz-start .cta .pl{display:inline-block;width:0;height:0;border-left:13px solid #C44908;border-top:9px solid transparent;border-bottom:9px solid transparent;}
 #bz-start .hint{margin-top:14px;font-size:13px;letter-spacing:.04em;opacity:.78;text-transform:uppercase;font-weight:600;}
 
-/* ---------- floating overview (zoom-out) button ---------- */
-#bz-grid{position:fixed;right:16px;bottom:14px;z-index:60;width:40px;height:40px;border-radius:9px;border:1px solid rgba(255,255,255,.25);
-  background:rgba(26,21,17,.55);display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;padding:9px;cursor:pointer;backdrop-filter:blur(4px);}
-#bz-grid span{background:#fff;border-radius:2px;opacity:.9;}
-#bz-grid:hover{background:var(--orange);border-color:var(--orange);}
-.reveal.overview #bz-grid{background:var(--orange);border-color:var(--orange);}
+/* ---------- top-right tools: overview + fullscreen (kept clear of reveal's arrow controls) ---------- */
+#bz-tools{position:fixed;top:14px;right:14px;z-index:60;display:flex;gap:8px;}
+#bz-tools button{width:38px;height:38px;border-radius:9px;border:1px solid rgba(255,255,255,.22);background:rgba(17,17,17,.5);
+  color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;backdrop-filter:blur(4px);transition:background .2s,border-color .2s;}
+#bz-tools button:hover{background:var(--orange);border-color:var(--orange);}
+#bz-tools button svg{width:18px;height:18px;display:block;}
+.reveal.overview #bz-tools .ov{background:var(--orange);border-color:var(--orange);}
 `;
 
 const initJS = `
@@ -102,7 +103,13 @@ const initJS = `
     disableLayout: false
   });
 
-  document.getElementById('bz-grid').addEventListener('click', function(){ Reveal.toggleOverview(); });
+  function toggleFullscreen(){
+    var fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+    if(fsEl){ (document.exitFullscreen || document.webkitExitFullscreen || function(){}).call(document); }
+    else { enterFullscreen(); }
+  }
+  document.querySelector('#bz-tools .ov').addEventListener('click', function(){ Reveal.toggleOverview(); });
+  document.querySelector('#bz-tools .fs').addEventListener('click', toggleFullscreen);
 `;
 
 const out = `<!DOCTYPE html>
@@ -137,7 +144,10 @@ ${symbolDef}
 ${sections}
 </div></div>
 
-<div id="bz-grid" title="Overview (O)"><span></span><span></span><span></span><span></span></div>
+<div id="bz-tools">
+  <button class="ov" title="Overview (O)" aria-label="Overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button>
+  <button class="fs" title="Full screen (F)" aria-label="Full screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V5a1 1 0 0 1 1-1h4M20 9V5a1 1 0 0 0-1-1h-4M4 15v4a1 1 0 0 0 1 1h4M20 15v4a1 1 0 0 1-1 1h-4"/></svg></button>
+</div>
 
 <script src="vendor/reveal/reveal.js"></script>
 <script>

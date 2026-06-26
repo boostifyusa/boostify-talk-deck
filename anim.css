@@ -48,6 +48,45 @@
 @keyframes bzSrcPulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 .reveal .slides section.present .flow .src1{animation:bzSrcPulse 6s ease-in-out infinite;}
 
+/* G · live reviews feed (slide 10): newest on top, older fade, new ones arrive */
+.livedot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);animation:livePulse 1.8s ease-in-out infinite;}
+@keyframes livePulse{0%{box-shadow:0 0 0 0 rgba(46,125,91,.5)}70%{box-shadow:0 0 0 8px rgba(46,125,91,0)}100%{box-shadow:0 0 0 0 rgba(46,125,91,0)}}
+.revstack{position:relative;margin-top:14px;}
+.revstack .rev{margin-bottom:12px;transition:opacity .5s ease;}
+.revstack .rev:nth-child(1){opacity:1;}
+.revstack .rev:nth-child(2){opacity:.58;}
+.revstack .rev:nth-child(3){opacity:.30;}
+.revstack .rev .q{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.9em;}
+.revstack .stars .e{color:var(--rule);}
+.revstack .rev.rev-new{animation:revIn .55s cubic-bezier(.2,.7,.2,1);}
+@keyframes revIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+
+/* H · AI agent chat (slide 19): messages arrive in sequence, then loops */
+.chat{background:#fff;border:1px solid var(--rule);border-radius:16px;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.10);width:100%;max-width:430px;}
+.chat-hd{display:flex;align-items:center;gap:11px;padding:13px 16px;background:var(--ink);color:#fff;}
+.chat-hd .cbot{width:34px;height:34px;border-radius:9px;background:var(--orange);color:#fff;font-family:var(--disp);font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;flex:none;}
+.chat-hd .cbn{font-family:var(--disp);font-weight:700;font-size:14px;}
+.chat-hd .cbs{font-size:11.5px;color:rgba(255,255,255,.72);display:flex;align-items:center;gap:6px;margin-top:1px;}
+.chat-hd .cbs .livedot{width:7px;height:7px;background:#10B981;}
+.chat-body{padding:16px;display:flex;flex-direction:column;gap:10px;min-height:300px;}
+.chat .msg{max-width:84%;padding:10px 13px;font-size:13.5px;line-height:1.4;opacity:0;}
+.chat .msg.show{animation:msgIn .35s ease both;}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.chat .msg.user{align-self:flex-end;background:var(--orange);color:#fff;border-radius:14px 14px 4px 14px;}
+.chat .msg.ai{align-self:flex-start;background:#F3F4F6;color:var(--ink);border-radius:14px 14px 14px 4px;}
+.chat .msg.typing{display:flex;gap:5px;padding:13px 14px;}
+.chat .msg.typing i{width:7px;height:7px;border-radius:50%;background:#9CA3AF;animation:typeBounce 1.2s infinite;}
+.chat .msg.typing i:nth-child(2){animation-delay:.15s}
+.chat .msg.typing i:nth-child(3){animation-delay:.3s}
+@keyframes typeBounce{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+.chat .msg.hide{display:none;}
+.chat-badge{margin-top:6px;align-self:flex-start;display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--rule);border-radius:12px;padding:10px 14px;box-shadow:0 8px 20px rgba(0,0,0,.09);opacity:0;}
+.chat-badge.show{animation:badgeIn .5s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes badgeIn{from{opacity:0;transform:scale(.85) translateY(6px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.chat-badge .ck{width:26px;height:26px;border-radius:50%;background:#D1FAE5;color:#10B981;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none;}
+.chat-badge b{font-family:var(--disp);font-size:13.5px;display:block;}
+.chat-badge>div span{font-size:11.5px;color:var(--mute);}
+
 /* reduced motion: stop everything that loops */
 @media (prefers-reduced-motion: reduce){
   .reveal .slides section.present .ring,
@@ -56,6 +95,7 @@
   .reveal .slides section.present .flagnote,
   .reveal .slides section.present .flagnote .x,
   .reveal .slides section.present .outs .o1,
-  .reveal .slides section.present .flow .src1{animation:none !important;}
+  .reveal .slides section.present .flow .src1,
+  .livedot,.revstack .rev.rev-new,.chat .msg.typing i{animation:none !important;}
   .cal .d,.cal .d .dot{transition:none !important;}
 }
