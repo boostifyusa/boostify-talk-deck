@@ -79,6 +79,24 @@
   .reveal .slides section.present .bld:nth-child(5){animation-delay:.30s} .reveal .slides section.present .bld:nth-child(6){animation-delay:.36s}
   .reveal .slides section.present .bld:nth-child(7){animation-delay:.42s} .reveal .slides section.present .bld:nth-child(8){animation-delay:.48s}
   @media (prefers-reduced-motion:reduce){.reveal .slides section.present .bld{animation:none !important;}}
+  /* AI-slop graphic (deliberately shows the tells: purple gradient, emoji, buzzwords, identical grid) */
+  .sloplabel{font-size:12.5px; color:var(--mute); display:flex; align-items:center; gap:8px; margin-bottom:10px;}
+  .sloplabel .x{background:var(--ink); color:#fff; font-family:var(--disp); font-weight:700; font-size:10px; padding:3px 8px; border-radius:5px; letter-spacing:.05em;}
+  .slopgrid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px;}
+  .slopsite{border:1px solid var(--rule); border-radius:9px; overflow:hidden; background:#fff; box-shadow:0 4px 12px rgba(0,0,0,.05);}
+  .slopsite .shero{height:44px; background:linear-gradient(135deg,#8b5cf6,#6366f1 55%,#22d3ee); display:flex; align-items:center; justify-content:center; color:#fff; font-family:var(--disp); font-weight:700; font-size:10px; text-align:center; padding:0 6px; line-height:1.1;}
+  .slopsite .sbody{padding:8px 8px 10px;}
+  .slopsite .sh{font-family:var(--disp); font-weight:700; font-size:9.5px; text-align:center; color:#1e1b4b;}
+  .slopsite .ss{font-size:7.5px; color:#9ca3af; text-align:center; margin-top:2px;}
+  .slopsite .scards{display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px; margin-top:7px;}
+  .slopsite .scards span{background:#f5f3ff; border-radius:6px; height:19px; display:flex; align-items:center; justify-content:center; font-size:10px;}
+  .slopcap{margin-top:12px; font-size:13px; color:var(--mute); font-style:italic; text-align:center;}
+  @keyframes slopIn{from{opacity:0; transform:scale(.93);} to{opacity:1; transform:scale(1);}}
+  .reveal .slides section.present .slopsite{animation:slopIn .45s ease-out both;}
+  .reveal .slides section.present .slopsite:nth-child(1){animation-delay:.12s} .reveal .slides section.present .slopsite:nth-child(2){animation-delay:.22s}
+  .reveal .slides section.present .slopsite:nth-child(3){animation-delay:.32s} .reveal .slides section.present .slopsite:nth-child(4){animation-delay:.42s}
+  .reveal .slides section.present .slopsite:nth-child(5){animation-delay:.52s} .reveal .slides section.present .slopsite:nth-child(6){animation-delay:.62s}
+  @media (prefers-reduced-motion:reduce){.reveal .slides section.present .slopsite{animation:none !important;}}
 
   /* ---------- MOCKUP COMPONENTS ---------- */
   /* phone */
@@ -626,7 +644,32 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
   <div class="foot"><span>Boostify · Get Seen, Get Hired</span><span class="r">AI · 20</span></div>
 </div></section>
 
-<!-- 20 · MONDAY CHECKLIST -->
+<!-- 21 · AI SLOP -->
+<section class="rs"><div class="slide">
+  <div class="two">
+    <div>
+      <h2>Beautiful, until you see it <span class="o">everywhere</span>.</h2><hr class="mark">
+      <p class="lead" style="margin-top:16px;">Claude, ChatGPT, and the rest can make anything look polished in seconds. The catch: everyone gets the same polish. Same gradient, same layout, same stock look.</p>
+      <p class="lead" style="margin-top:12px;">Customers are catching on. More of them now say they skip a business that feels generic and AI-made.</p>
+      <div class="act"><div class="l">Use it, don&rsquo;t copy it</div><p>Slop is the absence of a decision. Let AI do the busywork, then make it yours: your real photos, your voice, your town. If it could be any business, it is slop.</p></div>
+    </div>
+    <div>
+      <div class="sloplabel"><span class="x">AI</span> &ldquo;Make me a modern website&rdquo;</div>
+      <div class="slopgrid">
+        <div class="slopsite"><div class="shero">&#10024; Valley Builders</div><div class="sbody"><div class="sh">World-Class Solutions</div><div class="ss">Innovative. Seamless. Next-level.</div><div class="scards"><span>&#128640;</span><span>&#128161;</span><span>&#11088;</span></div></div></div>
+        <div class="slopsite"><div class="shero">&#10024; Fresno Dental</div><div class="sbody"><div class="sh">World-Class Solutions</div><div class="ss">Innovative. Seamless. Next-level.</div><div class="scards"><span>&#128640;</span><span>&#128161;</span><span>&#11088;</span></div></div></div>
+        <div class="slopsite"><div class="shero">&#10024; Clovis Caf&eacute;</div><div class="sbody"><div class="sh">World-Class Solutions</div><div class="ss">Innovative. Seamless. Next-level.</div><div class="scards"><span>&#128640;</span><span>&#128161;</span><span>&#11088;</span></div></div></div>
+        <div class="slopsite"><div class="shero">&#10024; Sierra Plumbing</div><div class="sbody"><div class="sh">World-Class Solutions</div><div class="ss">Innovative. Seamless. Next-level.</div><div class="scards"><span>&#128640;</span><span>&#128161;</span><span>&#11088;</span></div></div></div>
+        <div class="slopsite"><div class="shero">&#10024; Madera Auto</div><div class="sbody"><div class="sh">World-Class Solutions</div><div class="ss">Innovative. Seamless. Next-level.</div><div class="scards"><span>&#128640;</span><span>&#128161;</span><span>&#11088;</span></div></div></div>
+        <div class="slopsite"><div class="shero">&#10024; Kerman Roofing</div><div class="sbody"><div class="sh">World-Class Solutions</div><div class="ss">Innovative. Seamless. Next-level.</div><div class="scards"><span>&#128640;</span><span>&#128161;</span><span>&#11088;</span></div></div></div>
+      </div>
+      <div class="slopcap">Same gradient. Same emojis. Same everyone.</div>
+    </div>
+  </div>
+  <div class="foot"><span>Boostify · Anti-AI-slop playbook</span><span class="r">AI · 21</span></div>
+</div></section>
+
+<!-- 22 · MONDAY CHECKLIST -->
 <section class="rs"><div class="slide">
   <h2>Five free moves for Monday.</h2><hr class="mark">
   <div class="check" style="flex:1 1 auto; display:flex; flex-direction:column; justify-content:center;">
@@ -636,7 +679,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
     <div class="row"><div class="bx"></div><div><div class="h">Google yourself. Claim your profile, fix anything wrong.</div><div class="s">62% avoid a business over incorrect info.</div></div></div>
     <div class="row"><div class="bx"></div><div><div class="h">Turn on two-factor and set a &ldquo;verify before you pay&rdquo; rule.</div><div class="s">Two free habits that stop the costliest scams.</div></div></div>
   </div>
-  <div class="foot"><span>Print this as a takeaway card.</span><span class="r">21</span></div>
+  <div class="foot"><span>Print this as a takeaway card.</span><span class="r">22</span></div>
 </div></section>
 
 <!-- 20 · CTA -->
@@ -656,7 +699,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
       <div style="font-size:12.5px; color:rgba(255,255,255,.82); margin-top:4px;">Free, no obligation.</div>
     </div>
   </div>
-  <div class="foot"><span>Boostify · Get Seen, Get Hired</span><span class="r">22</span></div>
+  <div class="foot"><span>Boostify · Get Seen, Get Hired</span><span class="r">23</span></div>
 </div></section>
 
 <!-- 21 · CLOSING -->
@@ -675,7 +718,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
       <span style="font-family:var(--disp); font-weight:700; font-size:18px;">boostifyusa.com</span>
     </div>
   </div>
-  <div class="foot"><span>Powering tomorrow, today.</span><span class="r">23</span></div>
+  <div class="foot"><span>Powering tomorrow, today.</span><span class="r">24</span></div>
 </div></section>
 
 <!-- 22 · APPENDIX run of show -->
@@ -691,7 +734,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
     <tr><td><b>0:50&ndash;0:55</b></td><td><b>AI + checklist</b></td><td>AI as a time-saver (one demo), then the five Monday moves.</td></tr>
     <tr><td><b>0:55&ndash;1:00</b></td><td><b>Ask + Q&amp;A</b></td><td>Free online-presence check, QR, questions.</td></tr>
   </table>
-  <div class="foot"><span>Boostify · Internal guide</span><span class="r">24</span></div>
+  <div class="foot"><span>Boostify · Internal guide</span><span class="r">25</span></div>
 </div></section>
 
 <!-- 23 · APPENDIX sources -->
@@ -728,7 +771,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
       </div>
     </div>
   </div>
-  <div class="foot"><span>Boostify · Internal guide</span><span class="r">25</span></div>
+  <div class="foot"><span>Boostify · Internal guide</span><span class="r">26</span></div>
 </div></section>
 </div></div>
 
