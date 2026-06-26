@@ -94,25 +94,49 @@
     }, 5500));
   }
 
-  // AI agent chat (slide 19): play the message sequence, then loop.
+  // AI agent chat (slide 19): the AI bubble starts as 3 dots, then smoothly grows to the reply.
+  function morphAiBubble(bubble) {
+    var txt = bubble.querySelector('.txt');
+    var w0 = bubble.offsetWidth, h0 = bubble.offsetHeight;   // dots size (offsetWidth ignores reveal's scale transform)
+    bubble.classList.add('replied');                          // swap dots -> text
+    if (txt) txt.style.opacity = '0';                         // keep text invisible while the bubble resizes (no reflow jitter)
+    bubble.style.width = 'fit-content'; bubble.style.height = 'auto'; // shrink-to-text (respects max-width, so it wraps)
+    var w1 = bubble.offsetWidth, h1 = bubble.offsetHeight;    // reply size
+    bubble.style.width = w0 + 'px'; bubble.style.height = h0 + 'px';
+    void bubble.offsetWidth;                                  // reflow at the small size
+    bubble.style.transition = 'width .42s cubic-bezier(.2,.7,.2,1), height .42s cubic-bezier(.2,.7,.2,1)';
+    bubble.style.width = w1 + 'px'; bubble.style.height = h1 + 'px';
+    if (txt) txt.style.transition = 'opacity .3s ease';
+    timers.push(setTimeout(function () { if (txt) txt.style.opacity = '1'; }, 230));
+    timers.push(setTimeout(function () {
+      bubble.style.transition = ''; bubble.style.width = ''; bubble.style.height = '';
+      if (txt) { txt.style.transition = ''; txt.style.opacity = ''; }
+    }, 520));
+  }
   function startChat(slide) {
     var chat = slide.querySelector('.chat');
     if (!chat) return;
     var step = {};
     Array.prototype.slice.call(chat.querySelectorAll('[data-s]')).forEach(function (el) { step[el.getAttribute('data-s')] = el; });
-    function reset() { for (var k in step) { step[k].classList.remove('show', 'hide'); } }
+    var ai = step['2'];
+    function reset() {
+      for (var k in step) { step[k].classList.remove('show'); }
+      ai.classList.remove('replied');
+      ai.style.transition = ''; ai.style.width = ''; ai.style.height = '';
+      var t = ai.querySelector('.txt'); if (t) { t.style.opacity = ''; t.style.transition = ''; }
+    }
     if (reduce) { // show the resolved conversation, no motion
-      step['1'].classList.add('show'); step['2'].classList.add('hide');
-      step['3'].classList.add('show'); step['4'].classList.add('show'); step['5'].classList.add('show');
+      step['1'].classList.add('show'); ai.classList.add('show', 'replied');
+      step['3'].classList.add('show'); step['4'].classList.add('show');
       return;
     }
     function run() {
       reset();
       timers.push(setTimeout(function () { step['1'].classList.add('show'); }, 450));
-      timers.push(setTimeout(function () { step['2'].classList.add('show'); }, 1150));
-      timers.push(setTimeout(function () { step['2'].classList.add('hide'); step['3'].classList.add('show'); }, 2650));
-      timers.push(setTimeout(function () { step['4'].classList.add('show'); }, 3650));
-      timers.push(setTimeout(function () { step['5'].classList.add('show'); }, 4550));
+      timers.push(setTimeout(function () { ai.classList.add('show'); }, 1150));   // dots bubble appears
+      timers.push(setTimeout(function () { morphAiBubble(ai); }, 2650));          // dots grow into the reply
+      timers.push(setTimeout(function () { step['3'].classList.add('show'); }, 3750));
+      timers.push(setTimeout(function () { step['4'].classList.add('show'); }, 4650));
     }
     run();
     timers.push(setInterval(run, 8500));
