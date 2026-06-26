@@ -66,6 +66,19 @@
   .label{font-family:var(--disp); font-weight:700; font-size:12px; letter-spacing:.13em; text-transform:uppercase; color:var(--orange); margin-bottom:12px;}
   .ring{position:absolute; border-radius:50%; border:1.5px solid currentColor;}
   .col2{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+  .builders{display:grid; grid-template-columns:repeat(4,1fr); gap:13px; margin-top:14px;}
+  .bld{border:1px solid var(--rule); border-radius:10px; padding:15px 15px 16px; display:flex; flex-direction:column; gap:8px; background:#fff;}
+  .bld img{height:27px; max-width:120px; object-fit:contain; object-position:left center;}
+  .bld .bn{font-family:var(--disp); font-weight:700; font-size:15.5px; letter-spacing:-.01em;}
+  .bld .bd{font-size:12px; line-height:1.34; color:var(--mute);}
+  @keyframes bldIn{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
+  .reveal .slides section.present>.slide>.builders{animation:none;}
+  .reveal .slides section.present .bld{animation:bldIn .5s cubic-bezier(.2,.7,.2,1) both;}
+  .reveal .slides section.present .bld:nth-child(1){animation-delay:.06s} .reveal .slides section.present .bld:nth-child(2){animation-delay:.12s}
+  .reveal .slides section.present .bld:nth-child(3){animation-delay:.18s} .reveal .slides section.present .bld:nth-child(4){animation-delay:.24s}
+  .reveal .slides section.present .bld:nth-child(5){animation-delay:.30s} .reveal .slides section.present .bld:nth-child(6){animation-delay:.36s}
+  .reveal .slides section.present .bld:nth-child(7){animation-delay:.42s} .reveal .slides section.present .bld:nth-child(8){animation-delay:.48s}
+  @media (prefers-reduced-motion:reduce){.reveal .slides section.present .bld{animation:none !important;}}
 
   /* ---------- MOCKUP COMPONENTS ---------- */
   /* phone */
@@ -440,7 +453,25 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
   <div class="foot"><span>BrightLocal Local Consumer Review Survey 2026</span><span class="r">Website · 11</span></div>
 </div></section>
 
-<!-- 12 · KEEP IT ACCURATE -->
+<!-- 12 · WEBSITE BUILDERS -->
+<section class="rs"><div class="slide">
+  <h2>You don&rsquo;t have to code. <span class="o">Pick a platform</span>.</h2><hr class="mark">
+  <p class="lead" style="margin-top:14px; max-width:64ch;">These tools do the heavy lifting. The right one depends on your goals and budget, not the ads. A finished site on any of them beats a perfect one that never ships.</p>
+  <div class="builders">
+    <div class="bld"><img src="images/builders/webflow.svg" alt="Webflow logo"><div class="bn">Webflow</div><div class="bd">Designer control and clean code, no plugins.</div></div>
+    <div class="bld"><img src="images/builders/framer.svg" alt="Framer logo"><div class="bn">Framer</div><div class="bd">Fast, modern sites with animation built in.</div></div>
+    <div class="bld"><img src="images/builders/wordpress.svg" alt="WordPress logo"><div class="bn">WordPress</div><div class="bd">The most-used CMS. Flexible, huge ecosystem.</div></div>
+    <div class="bld"><img src="images/builders/elementor.svg" alt="Elementor logo"><div class="bn">Elementor</div><div class="bd">Drag-and-drop page builder for WordPress.</div></div>
+    <div class="bld"><img src="images/builders/squarespace.svg" alt="Squarespace logo"><div class="bn">Squarespace</div><div class="bd">Polished templates, all in one place.</div></div>
+    <div class="bld"><img src="images/builders/wix.svg" alt="Wix logo"><div class="bn">Wix</div><div class="bd">Beginner-friendly with lots of options.</div></div>
+    <div class="bld"><img src="images/builders/shopify.svg" alt="Shopify logo"><div class="bn">Shopify</div><div class="bd">Built to sell products online.</div></div>
+    <div class="bld"><img src="images/builders/godaddy.svg" alt="GoDaddy logo"><div class="bn">GoDaddy</div><div class="bd">Quick and cheap to get something live.</div></div>
+  </div>
+  <div class="act" style="margin-top:18px;"><div class="l">Not sure which?</div><p>That is the call we help you make, then we build it. The platform should fit the business, not the other way around.</p></div>
+  <div class="foot"><span>Boostify · Get Seen, Get Hired</span><span class="r">Website · 12</span></div>
+</div></section>
+
+<!-- 13 · KEEP IT ACCURATE -->
 <section class="rs"><div class="slide">
   <div class="two">
     <div>
@@ -459,7 +490,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
       </div>
     </div>
   </div>
-  <div class="foot"><span>BrightLocal Discovery &amp; Trust Report</span><span class="r">Website · 12</span></div>
+  <div class="foot"><span>BrightLocal Discovery &amp; Trust Report</span><span class="r">Website · 13</span></div>
 </div></section>
 
 <!-- 13 · GBP FRONT DOOR -->
@@ -481,7 +512,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
       </div>
     </div>
   </div>
-  <div class="foot"><span>SOCi Consumer Behavior Index 2024</span><span class="r">Website · 13</span></div>
+  <div class="foot"><span>SOCi Consumer Behavior Index 2024</span><span class="r">Website · 14</span></div>
 </div></section>
 
 <!-- 14 · CONTRACTS / CAPABILITY -->
@@ -505,7 +536,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
       </div>
     </div>
   </div>
-  <div class="foot"><span>CalOSBA / DGS-OSDS</span><span class="r">Website · 14</span></div>
+  <div class="foot"><span>CalOSBA / DGS-OSDS</span><span class="r">Website · 15</span></div>
 </div></section>
 
 <!-- 15 · SECURITY DIVIDER -->
@@ -514,7 +545,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
   <div style="font-family:var(--disp); font-weight:800; font-size:80px; color:rgba(255,255,255,.3); line-height:1;">3</div>
   <h1 style="font-family:var(--disp); font-weight:800; font-size:74px; line-height:.96; letter-spacing:-.03em; margin-top:6px;">Stay safe online.</h1>
   <p class="lead" style="margin-top:20px; font-size:22px; max-width:44ch;">The same tools that grow your business get targeted. A few free habits protect you.</p>
-  <div class="foot"><span>Boostify · Get Seen, Get Hired</span><span class="r">15</span></div>
+  <div class="foot"><span>Boostify · Get Seen, Get Hired</span><span class="r">16</span></div>
 </div></section>
 
 <!-- 16 · THE SCAMS -->
@@ -534,7 +565,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
       </div>
     </div>
   </div>
-  <div class="foot"><span>FTC, June 2026 · FBI / IC3 2025 Report</span><span class="r">Stay safe · 16</span></div>
+  <div class="foot"><span>FTC, June 2026 · FBI / IC3 2025 Report</span><span class="r">Stay safe · 17</span></div>
 </div></section>
 
 <!-- 17 · PROTECT YOURSELF -->
@@ -547,7 +578,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
     <div class="row"><div class="bx"></div><div><div class="h">Use a password manager. One strong password per account.</div><div class="s">Reused passwords are how one leak becomes ten break-ins.</div></div></div>
     <div class="row"><div class="bx"></div><div><div class="h">Lock down your site: SSL on, backups running.</div><div class="s">So a bad day is an inconvenience, not a disaster.</div></div></div>
   </div>
-  <div class="foot"><span>FTC small-business guidance · FBI / IC3</span><span class="r">Stay safe · 17</span></div>
+  <div class="foot"><span>FTC small-business guidance · FBI / IC3</span><span class="r">Stay safe · 18</span></div>
 </div></section>
 
 <!-- 18 · AI (minor) -->
@@ -568,7 +599,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
       </div>
     </div>
   </div>
-  <div class="foot"><span>U.S. Chamber of Commerce, 2025</span><span class="r">AI · 18</span></div>
+  <div class="foot"><span>U.S. Chamber of Commerce, 2025</span><span class="r">AI · 19</span></div>
 </div></section>
 
 <!-- 19 · AI AGENT (chat demo) -->
@@ -592,7 +623,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
       </div>
     </div>
   </div>
-  <div class="foot"><span>Boostify · Get Seen, Get Hired</span><span class="r">AI · 19</span></div>
+  <div class="foot"><span>Boostify · Get Seen, Get Hired</span><span class="r">AI · 20</span></div>
 </div></section>
 
 <!-- 20 · MONDAY CHECKLIST -->
@@ -605,7 +636,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
     <div class="row"><div class="bx"></div><div><div class="h">Google yourself. Claim your profile, fix anything wrong.</div><div class="s">62% avoid a business over incorrect info.</div></div></div>
     <div class="row"><div class="bx"></div><div><div class="h">Turn on two-factor and set a &ldquo;verify before you pay&rdquo; rule.</div><div class="s">Two free habits that stop the costliest scams.</div></div></div>
   </div>
-  <div class="foot"><span>Print this as a takeaway card.</span><span class="r">20</span></div>
+  <div class="foot"><span>Print this as a takeaway card.</span><span class="r">21</span></div>
 </div></section>
 
 <!-- 20 · CTA -->
@@ -625,7 +656,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
       <div style="font-size:12.5px; color:rgba(255,255,255,.82); margin-top:4px;">Free, no obligation.</div>
     </div>
   </div>
-  <div class="foot"><span>Boostify · Get Seen, Get Hired</span><span class="r">21</span></div>
+  <div class="foot"><span>Boostify · Get Seen, Get Hired</span><span class="r">22</span></div>
 </div></section>
 
 <!-- 21 · CLOSING -->
@@ -644,7 +675,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
       <span style="font-family:var(--disp); font-weight:700; font-size:18px;">boostifyusa.com</span>
     </div>
   </div>
-  <div class="foot"><span>Powering tomorrow, today.</span><span class="r">22</span></div>
+  <div class="foot"><span>Powering tomorrow, today.</span><span class="r">23</span></div>
 </div></section>
 
 <!-- 22 · APPENDIX run of show -->
@@ -660,7 +691,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
     <tr><td><b>0:50&ndash;0:55</b></td><td><b>AI + checklist</b></td><td>AI as a time-saver (one demo), then the five Monday moves.</td></tr>
     <tr><td><b>0:55&ndash;1:00</b></td><td><b>Ask + Q&amp;A</b></td><td>Free online-presence check, QR, questions.</td></tr>
   </table>
-  <div class="foot"><span>Boostify · Internal guide</span><span class="r">23</span></div>
+  <div class="foot"><span>Boostify · Internal guide</span><span class="r">24</span></div>
 </div></section>
 
 <!-- 23 · APPENDIX sources -->
@@ -697,7 +728,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
       </div>
     </div>
   </div>
-  <div class="foot"><span>Boostify · Internal guide</span><span class="r">24</span></div>
+  <div class="foot"><span>Boostify · Internal guide</span><span class="r">25</span></div>
 </div></section>
 </div></div>
 

@@ -1,2 +1,5 @@
 Unsplash photos (free license, commercial OK, no attribution required)
 feed-crew/jobsite/worker/remodel: unsplash.com
+
+builders/*.svg: Simple Icons (simpleicons.org, CC0 project). Brand marks are
+trademarks of their respective owners, shown to identify the products.
