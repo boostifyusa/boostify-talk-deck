@@ -108,7 +108,7 @@ const initJS = `
     if(fsEl){ (document.exitFullscreen || document.webkitExitFullscreen || function(){}).call(document); }
     else { enterFullscreen(); }
   }
-  document.querySelector('#bz-tools .ov').addEventListener('click', function(){ Reveal.toggleOverview(); });
+  document.querySelector('#bz-tools .ov').addEventListener('click', function(){ if(!window.BZ_LOCKED) Reveal.toggleOverview(); });
   document.querySelector('#bz-tools .fs').addEventListener('click', toggleFullscreen);
 `;
 

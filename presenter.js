@@ -41,10 +41,17 @@
     document.querySelectorAll('.bz-view').forEach(function (b) { b.textContent = (view === 'notes') ? 'Slides' : 'Notes'; });
     document.querySelectorAll('.bz-attach').forEach(function (b) { b.textContent = attached ? 'Detach' : 'Attach'; b.classList.toggle('on', !attached); });
   }
+  // Locked = no control: disable reveal's own keyboard/arrows/swipe (and the overview jump).
+  // Programmatic Reveal.slide() from sync still works, so locked devices follow but can't drive.
+  function applyLock() {
+    window.BZ_LOCKED = !unlocked;
+    if (window.Reveal && Reveal.configure) Reveal.configure({ keyboard: unlocked, controls: unlocked, touch: unlocked });
+  }
   function applyView() {
     notes.classList.toggle('show', unlocked && view === 'notes');
     bar.classList.toggle('show', unlocked && view === 'slides');
     unlockChip.classList.toggle('show', !unlocked);
+    applyLock();
     syncButtons();
     renderNotes();
   }
