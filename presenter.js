@@ -84,6 +84,7 @@
   document.querySelectorAll('.bz-attach').forEach(function (b) {
     b.onclick = function () { attached = !attached; localStorage.bz_attached = attached ? '1' : '0'; if (attached) pullState(true); syncButtons(); };
   });
+  document.querySelectorAll('.bz-recenter').forEach(function (b) { b.onclick = recenterAll; });
   $('bz-prev').onclick = function () { R() && R().prev(); };
   $('bz-nextb').onclick = function () { R() && R().next(); };
 
@@ -94,9 +95,11 @@
       .then(function (r) { return r.json(); }).then(function (s) { if (s && typeof s.rev === 'number') lastRev = s.rev; }).catch(function () {});
   }
   function pullState(force) {
-    fetch('/api/state').then(function (r) { return r.json(); }).then(function (s) {
+    return fetch('/api/state').then(function (r) { return r.json(); }).then(function (s) {
       setConn(true);
       if (typeof s.rev !== 'number') return;
+      // Remember the room's slide so the start overlay can land a late joiner on it (not slide 1).
+      if (typeof s.slide === 'number') window.BZ_SHARED_SLIDE = s.slide;
       if (s.rev !== lastRev || force) {
         lastRev = s.rev;
         if ((attached || force) && s.by !== cid && typeof s.slide === 'number' && s.slide !== curIndex()) {
@@ -105,14 +108,24 @@
       }
     }).catch(function () { setConn(false); });
   }
+  // "Recenter everyone": force-advance the shared slide so every attached device snaps to mine.
+  function recenterAll() {
+    if (!unlocked || !pin) return;
+    fetch('/api/state', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ slide: curIndex(), clientId: cid, pin: pin, force: true }) })
+      .then(function (r) { return r.json(); }).then(function (s) { if (s && typeof s.rev === 'number') lastRev = s.rev; }).catch(function () {});
+  }
 
   function start() {
     if (!window.Reveal) { return setTimeout(start, 80); }
     Reveal.on('slidechanged', function () { renderNotes(); if (!applyingRemote) pushState(); });
     if (unlocked) dismissStart();
+    // A read-only late joiner clicks the cover to begin: snap them to the live slide right after.
+    var se = $('bz-start'); if (se) se.addEventListener('click', function () { setTimeout(function () { pullState(true); }, 240); });
     applyView();
     pullState(true);
-    setInterval(pullState, POLL);
+    // Jittered, non-overlapping poll: at 100-300 viewers this spreads load and never stacks requests.
+    function loop() { pullState(false).then(function () { setTimeout(loop, POLL + Math.floor(Math.random() * 300)); }); }
+    setTimeout(loop, POLL + Math.floor(Math.random() * 300));
   }
   start();
 })();

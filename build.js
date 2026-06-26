@@ -88,7 +88,9 @@ const initJS = `
     enterFullscreen();
     startEl.classList.add('hide');
     document.body.classList.remove('prestart'); // triggers the cover animation
-    setTimeout(function(){ if(window.Reveal){ Reveal.layout(); Reveal.slide(0); } }, 120);
+    // Land on the slide the room is on: 0 for a fresh presenter, the live slide for a late joiner.
+    var landOn = (typeof window.BZ_SHARED_SLIDE === 'number') ? window.BZ_SHARED_SLIDE : 0;
+    setTimeout(function(){ if(window.Reveal){ Reveal.layout(); Reveal.slide(landOn); } }, 120);
   }
   startEl.addEventListener('click', startShow);
   window.addEventListener('keydown', function(e){
@@ -165,6 +167,7 @@ ${sections}
     <span class="bz-badge" id="bz-num">1 / 1</span>
     <span class="bz-conn">● Live</span>
     <span class="bz-spacer"></span>
+    <button class="bz-btn bz-recenter" title="Pull everyone to this slide">Recenter</button>
     <button class="bz-btn bz-view">Slides</button>
     <button class="bz-btn bz-attach">Detach</button>
   </div>
@@ -181,6 +184,7 @@ ${sections}
 
 <div id="bz-bar" class="bz-bar">
   <button class="bz-btn bz-view">Notes</button>
+  <button class="bz-btn bz-recenter" title="Pull everyone to this slide">Recenter</button>
   <button class="bz-btn bz-attach">Detach</button>
   <span class="bz-bar-num" id="bz-barnum">1/1</span>
 </div>

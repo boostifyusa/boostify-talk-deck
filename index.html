@@ -335,7 +335,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
   <div class="two">
     <div>
       <h2>Rule one: show up. Don&rsquo;t chase perfect timing.</h2><hr class="mark">
-      <p class="lead" style="margin-top:18px;">Buffer studied <b>4.8 million posts</b>. The finding: accounts that skip a week fall behind their own growth. Consistency, not the magic hour, drives reach.</p>
+      <p class="lead" style="margin-top:18px;">Buffer studied <b>52 million posts</b>. The finding: accounts that skip a week fall behind their own growth. Consistency, not the magic hour, drives reach.</p>
       <p class="lead" style="margin-top:12px;">A realistic pace for a busy owner: Instagram <b>3 to 5 times a week</b>, short video <b>2 to 5</b>. Two posts you actually keep up beats five you don&rsquo;t.</p>
       <div class="act"><div class="l">Do Monday</div><p>Pick your days. Batch three posts for this week in one sitting.</p></div>
     </div>
@@ -776,7 +776,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
     <div>
       <div class="label" style="color:var(--ink);">Verified sources</div>
       <div style="font-size:14px; line-height:1.65; color:var(--mute);">
-        <b style="color:var(--ink);">Buffer 2026</b> — consistency, posting cadence (4.8M posts)<br>
+        <b style="color:var(--ink);">Buffer 2026</b> — consistency, posting cadence (52M posts)<br>
         <b style="color:var(--ink);">BrightLocal LCRS 2026</b> — 97% / 68% / 47% / 74% / 54% / 71%<br>
         <b style="color:var(--ink);">BrightLocal Discovery &amp; Trust</b> — 62% avoid wrong info<br>
         <b style="color:var(--ink);">SOCi 2024</b> — 72% use Google for local info<br>
@@ -826,6 +826,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
     <span class="bz-badge" id="bz-num">1 / 1</span>
     <span class="bz-conn">● Live</span>
     <span class="bz-spacer"></span>
+    <button class="bz-btn bz-recenter" title="Pull everyone to this slide">Recenter</button>
     <button class="bz-btn bz-view">Slides</button>
     <button class="bz-btn bz-attach">Detach</button>
   </div>
@@ -842,6 +843,7 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
 
 <div id="bz-bar" class="bz-bar">
   <button class="bz-btn bz-view">Notes</button>
+  <button class="bz-btn bz-recenter" title="Pull everyone to this slide">Recenter</button>
   <button class="bz-btn bz-attach">Detach</button>
   <span class="bz-bar-num" id="bz-barnum">1/1</span>
 </div>
@@ -862,7 +864,9 @@ body.prestart .reveal .slides section.present>.slide>*{animation:none;opacity:0;
     enterFullscreen();
     startEl.classList.add('hide');
     document.body.classList.remove('prestart'); // triggers the cover animation
-    setTimeout(function(){ if(window.Reveal){ Reveal.layout(); Reveal.slide(0); } }, 120);
+    // Land on the slide the room is on: 0 for a fresh presenter, the live slide for a late joiner.
+    var landOn = (typeof window.BZ_SHARED_SLIDE === 'number') ? window.BZ_SHARED_SLIDE : 0;
+    setTimeout(function(){ if(window.Reveal){ Reveal.layout(); Reveal.slide(landOn); } }, 120);
   }
   startEl.addEventListener('click', startShow);
   window.addEventListener('keydown', function(e){

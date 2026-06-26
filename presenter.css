@@ -26,6 +26,10 @@
 .bz-spacer{flex:1;}
 .bz-btn{font-family:var(--disp);font-weight:700;font-size:13px;background:#fff;border:1px solid var(--rule);color:var(--ink);padding:8px 13px;border-radius:8px;cursor:pointer;white-space:nowrap;}
 .bz-btn.on{background:var(--orange);border-color:var(--orange);color:#fff;}
+/* recenter: the "get everyone on my slide" button, kept findable (filled orange) in a hurry */
+.bz-recenter{background:var(--orange)!important;border-color:var(--orange)!important;color:#fff!important;}
+.bz-recenter:hover{background:var(--fill)!important;border-color:var(--fill)!important;}
+.bz-recenter:active{transform:translateY(1px);}
 .bz-notes-body{flex:1;overflow:auto;padding:24px 26px 12px;display:flex;flex-direction:column;}
 .bz-now{font-family:var(--disp);font-weight:800;font-size:clamp(21px,3.3vw,33px);line-height:1.08;letter-spacing:-.02em;color:var(--ink);}
 .bz-now .o{color:var(--orange);}
