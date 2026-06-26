@@ -15,18 +15,13 @@
 .reveal .slides section.present .ring{animation:bzPulse 7s ease-in-out infinite;transform-origin:center;}
 .reveal .slides section.present .ring:nth-of-type(2){animation-duration:9s;animation-delay:-2.5s;}
 
-/* C · checklists tick themselves through, hold, reset, loop ("getting it done") */
-.reveal .slides section.present .check .bx{position:relative;animation:bzBox 7s ease-in-out infinite both;}
+/* C · checklists tick through (JS-driven): quick sequence, long hold, then a clean reset */
+.reveal .slides section.present .check .bx{position:relative;transition:background-color .28s ease;}
 .reveal .slides section.present .check .bx::after{content:"";position:absolute;left:31%;top:6%;width:26%;height:55%;
   border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) scale(0);opacity:0;
-  animation:bzMark 7s ease-in-out infinite both;}
-@keyframes bzBox{0%,4%{background:transparent}11%,90%{background:var(--orange)}100%{background:transparent}}
-@keyframes bzMark{0%,6%{opacity:0;transform:rotate(45deg) scale(0)}13%,90%{opacity:1;transform:rotate(45deg) scale(1)}100%{opacity:0;transform:rotate(45deg) scale(0)}}
-.reveal .slides section.present .check .row:nth-child(1) .bx,.reveal .slides section.present .check .row:nth-child(1) .bx::after{animation-delay:0s}
-.reveal .slides section.present .check .row:nth-child(2) .bx,.reveal .slides section.present .check .row:nth-child(2) .bx::after{animation-delay:.45s}
-.reveal .slides section.present .check .row:nth-child(3) .bx,.reveal .slides section.present .check .row:nth-child(3) .bx::after{animation-delay:.9s}
-.reveal .slides section.present .check .row:nth-child(4) .bx,.reveal .slides section.present .check .row:nth-child(4) .bx::after{animation-delay:1.35s}
-.reveal .slides section.present .check .row:nth-child(5) .bx,.reveal .slides section.present .check .row:nth-child(5) .bx::after{animation-delay:1.8s}
+  transition:opacity .2s ease, transform .34s cubic-bezier(.34,1.56,.64,1);}
+.reveal .slides section.present .check .bx.ticked{background:var(--orange);}
+.reveal .slides section.present .check .bx.ticked::after{opacity:1;transform:rotate(45deg) scale(1);}
 
 /* D · scam-email red flags pulse in sequence (eye walks down the flags) */
 .reveal .slides section.present .flagnote{animation:bzFlagRow 3.4s ease-in-out infinite both;}
@@ -36,17 +31,17 @@
 .reveal .slides section.present .flagnote ~ .flagnote,.reveal .slides section.present .flagnote ~ .flagnote .x{animation-delay:.4s}
 .reveal .slides section.present .flagnote ~ .flagnote ~ .flagnote,.reveal .slides section.present .flagnote ~ .flagnote ~ .flagnote .x{animation-delay:.8s}
 
-/* F · one job -> a week of posts: a highlight sweeps Mon..Sat, then loops */
-@keyframes bzSweep{0%{border-color:var(--orange);background:var(--cream);}9%{border-color:var(--rule);background:#fff;}100%{border-color:var(--rule);background:#fff;}}
-.reveal .slides section.present .outs .o1{animation:bzSweep 6s linear infinite;}
+/* F · one job -> a week of posts: a highlight sweeps the day cards, then pauses before repeating */
+@keyframes bzSweep{0%{border-color:var(--orange);background:var(--cream);}7%,100%{border-color:var(--rule);background:#fff;}}
+.reveal .slides section.present .outs .o1{animation:bzSweep 8s ease-out infinite;}
 .reveal .slides section.present .outs .o1:nth-child(1){animation-delay:0s}
-.reveal .slides section.present .outs .o1:nth-child(2){animation-delay:1s}
-.reveal .slides section.present .outs .o1:nth-child(3){animation-delay:2s}
-.reveal .slides section.present .outs .o1:nth-child(4){animation-delay:3s}
-.reveal .slides section.present .outs .o1:nth-child(5){animation-delay:4s}
-.reveal .slides section.present .outs .o1:nth-child(6){animation-delay:5s}
-@keyframes bzSrcPulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-.reveal .slides section.present .flow .src1{animation:bzSrcPulse 6s ease-in-out infinite;}
+.reveal .slides section.present .outs .o1:nth-child(2){animation-delay:.7s}
+.reveal .slides section.present .outs .o1:nth-child(3){animation-delay:1.4s}
+.reveal .slides section.present .outs .o1:nth-child(4){animation-delay:2.1s}
+.reveal .slides section.present .outs .o1:nth-child(5){animation-delay:2.8s}
+.reveal .slides section.present .outs .o1:nth-child(6){animation-delay:3.5s}
+@keyframes bzSrcPulse{0%,55%,100%{transform:translateY(0)}28%{transform:translateY(-4px)}}
+.reveal .slides section.present .flow .src1{animation:bzSrcPulse 8s ease-in-out infinite;}
 
 /* G · live reviews feed (slide 10): newest on top, older fade, new ones arrive */
 .livedot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);animation:livePulse 1.8s ease-in-out infinite;}
@@ -102,5 +97,7 @@
   .reveal .slides section.present .outs .o1,
   .reveal .slides section.present .flow .src1,
   .livedot,.revstack .rev.rev-new,.chat .msg.morph .dots i{animation:none !important;}
-  .cal .d,.cal .d .dot{transition:none !important;}
+  .cal .d,.cal .d .dot,
+  .reveal .slides section.present .check .bx,
+  .reveal .slides section.present .check .bx::after{transition:none !important;}
 }

@@ -142,6 +142,24 @@
     timers.push(setInterval(run, 8500));
   }
 
+  // Checklists (slides 12/17/19): tick in a quick sequence, hold a while, then reset together.
+  function startChecklists(slide) {
+    var lists = Array.prototype.slice.call(slide.querySelectorAll('.check'));
+    if (!lists.length) return;
+    lists.forEach(function (list) {
+      var boxes = Array.prototype.slice.call(list.querySelectorAll('.bx'));
+      if (!boxes.length) return;
+      if (reduce) { boxes.forEach(function (b) { b.classList.add('ticked'); }); return; }
+      function cycle() {
+        boxes.forEach(function (b) { b.classList.remove('ticked'); });           // clean reset (all at once)
+        boxes.forEach(function (b, i) { timers.push(setTimeout(function () { b.classList.add('ticked'); }, 550 + i * 340)); });
+      }
+      cycle();
+      var period = 550 + boxes.length * 340 + 4200;  // sequence + long hold before the reset
+      timers.push(setInterval(cycle, period));
+    });
+  }
+
   function onSlide() {
     var slide = window.Reveal && Reveal.getCurrentSlide();
     if (!slide || slide === lastSlide) return; // ignore repeated fires for the same slide
@@ -151,6 +169,7 @@
     countUp(slide);
     startReviews(slide);
     startChat(slide);
+    startChecklists(slide);
   }
 
   function init() {

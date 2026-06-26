@@ -70,11 +70,17 @@
   .ph-hd{display:flex; align-items:center; gap:8px; padding:10px 12px; border-bottom:1px solid var(--rule);}
   .ph-av{width:30px;height:30px;border-radius:50%;background:var(--orange);color:#fff;font-family:var(--disp);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;}
   .ph-hd .n{font-family:var(--disp);font-weight:700;font-size:13px;} .ph-hd .h{font-size:11px;color:var(--mute);}
-  .ph-post{padding:0;} .ph-img{height:150px; display:flex; align-items:flex-end; padding:10px; color:#fff; font-family:var(--disp); font-weight:700; font-size:14px;}
-  .ph-cap{padding:8px 12px; font-size:12px; line-height:1.35; color:var(--ink);} .ph-cap b{color:var(--ink);}
-  .ph-meta{padding:4px 12px 10px; font-size:11px; color:var(--mute);}
-  .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:3px; padding:3px;}
-  .gt{height:78px; display:flex; align-items:flex-end; padding:6px; color:#fff; font-family:var(--disp); font-weight:700; font-size:10.5px; line-height:1.05;}
+  .ph-screen{position:relative; height:336px; overflow:hidden;}
+  .ph-feed{display:flex; flex-direction:column;}
+  .ph-post{padding-bottom:10px; border-bottom:1px solid var(--rule);}
+  .ph-photo{height:172px; background-size:cover; background-position:center; background-color:#e8e2d9;}
+  .ph-row{display:flex; align-items:center; gap:5px; padding:8px 12px 1px; font-size:11.5px; color:var(--ink);}
+  .ph-row .ph-heart{color:var(--orange); font-size:14px;}
+  .ph-cap{padding:2px 12px 0; font-size:11.5px; line-height:1.35; color:var(--ink);} .ph-cap b{color:var(--ink); font-weight:700;}
+  .ph-time{padding:3px 12px 0; font-size:10px; color:var(--mute); text-transform:uppercase; letter-spacing:.03em;}
+  @keyframes feedScroll{0%{transform:translateY(0); opacity:0} 3%{opacity:1} 9%{transform:translateY(0)} 90%{transform:translateY(calc(336px - 100%)); opacity:1} 97%,100%{transform:translateY(calc(336px - 100%)); opacity:0}}
+  .reveal .slides section.present .ph-feed{animation:feedScroll 15s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.reveal .slides section.present .ph-feed{animation:none !important;}}
   /* browser */
   .browser{border:1px solid var(--rule); border-radius:11px; overflow:hidden; background:#fff; box-shadow:0 14px 34px rgba(0,0,0,.10); width:100%;}
   .bch{height:36px; background:#F2EDE6; display:flex; align-items:center; gap:6px; padding:0 14px;}
@@ -247,15 +253,33 @@
     <div style="display:flex; justify-content:center;">
       <div class="phone">
         <div class="nt"></div>
-        <div class="ph-hd"><div class="ph-av">VP</div><div><div class="n">valleyproconstruction</div><div class="h">Fresno, CA</div></div></div>
-        <div class="ph-img f-slate">Driveway · Clovis</div>
-        <div class="ph-cap"><b>valleyproconstruction</b> Cracked to brand new in two days. Swipe for the before.</div>
-        <div class="ph-meta">♥ 84 &nbsp;·&nbsp; 12 comments &nbsp;·&nbsp; 2h</div>
-        <div class="grid3">
-          <div class="gt f-or2">Before / After</div>
-          <div class="gt f-ink">Meet the crew</div>
-          <div class="gt f-green">5★ review</div>
-        </div>
+        <div class="ph-hd"><div class="ph-av">VP</div><div><div class="n">valleyproconstruction</div><div class="h">Fresno, CA · Concrete &amp; driveways</div></div></div>
+        <div class="ph-screen"><div class="ph-feed">
+          <div class="ph-post">
+            <div class="ph-photo" style="background-image:url(images/feed-jobsite.jpg);"></div>
+            <div class="ph-row"><span class="ph-heart">&#9829;</span><b>84</b>&nbsp;likes</div>
+            <div class="ph-cap"><b>valleyproconstruction</b> Fresh pour in Clovis. Smooth and solid, good for 20 years.</div>
+            <div class="ph-time">2 hours ago</div>
+          </div>
+          <div class="ph-post">
+            <div class="ph-photo" style="background-image:url(images/feed-crew.jpg);"></div>
+            <div class="ph-row"><span class="ph-heart">&#9829;</span><b>61</b>&nbsp;likes</div>
+            <div class="ph-cap"><b>valleyproconstruction</b> The crew, mid-project. Same team on every job.</div>
+            <div class="ph-time">Yesterday</div>
+          </div>
+          <div class="ph-post">
+            <div class="ph-photo" style="background-image:url(images/feed-plan.jpg);"></div>
+            <div class="ph-row"><span class="ph-heart">&#9829;</span><b>112</b>&nbsp;likes</div>
+            <div class="ph-cap"><b>valleyproconstruction</b> Every job starts with a solid plan. Measure twice.</div>
+            <div class="ph-time">3 days ago</div>
+          </div>
+          <div class="ph-post">
+            <div class="ph-photo" style="background-image:url(images/feed-worker.jpg);"></div>
+            <div class="ph-row"><span class="ph-heart">&#9829;</span><b>57</b>&nbsp;likes</div>
+            <div class="ph-cap"><b>valleyproconstruction</b> 20 years on the tools and still loving it.</div>
+            <div class="ph-time">5 days ago</div>
+          </div>
+        </div></div>
       </div>
     </div>
   </div>
